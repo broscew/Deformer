@@ -1,0 +1,46 @@
+{
+    "name": "Input Reader",
+    "maps": [
+        {
+            "name": "MeshDeform",
+            "id": "ad596767-baa7-420d-9483-e47927b644b7",
+            "actions": [
+                {
+                    "name": "Deform",
+                    "type": "Button",
+                    "id": "744d4790-1200-4177-9460-b6cf1c43c084",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c2a5045f-fa95-4c5c-93cc-862b0405b242",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Deform",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
