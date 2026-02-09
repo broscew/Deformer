@@ -3,9 +3,11 @@ using Unity.Jobs;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshCollider))]
 public class Deformer : MonoBehaviour
 {
     private Mesh m_Mesh;
+    private MeshCollider m_MeshCollider;
 
     private NativeArray<Vector3> m_OriginalVertices;
     private NativeArray<Vector3> m_CurrentVertices;
@@ -16,6 +18,8 @@ public class Deformer : MonoBehaviour
     private void Awake()
     {
         m_Mesh = GetComponent<MeshFilter>().mesh;
+        m_MeshCollider = GetComponent<MeshCollider>();
+
 
         m_OriginalVertices = new NativeArray<Vector3>(m_Mesh.vertices, Allocator.Persistent);
         m_CurrentVertices = new NativeArray<Vector3>(m_Mesh.vertices, Allocator.Persistent);
@@ -59,6 +63,8 @@ public class Deformer : MonoBehaviour
         m_Mesh.SetVertices(m_CurrentVertices);
         m_Mesh.RecalculateNormals();
 
+        m_MeshCollider.sharedMesh = m_Mesh;
+
         m_Scheduled = false;
     }
 
@@ -73,5 +79,7 @@ public class Deformer : MonoBehaviour
         m_Mesh.MarkDynamic();
         m_Mesh.SetVertices(m_OriginalVertices);
         m_Mesh.RecalculateNormals();
+
+        m_MeshCollider.sharedMesh = m_Mesh;
     }
 }

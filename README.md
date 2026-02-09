@@ -6,6 +6,7 @@ This is a simple mesh deformer created in Unity using a custom plane.obj
 ## Build/ Run Instructions 
 - Clone the git
 - Open the project
+- Open MainScene
 - Build and Run
 
 ## Architecture
