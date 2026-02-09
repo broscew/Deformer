@@ -21,10 +21,11 @@ public static class DeformerUtilities
         Vector3 worldVertex = param.m_OwnerTranformMatrix.MultiplyPoint3x4(vertexPosition);
 
         Vector3 pointToVertex = worldVertex - param.m_SelectedPosition;
-        float radialRatio = (param.m_Radius * param.m_Radius) - pointToVertex.sqrMagnitude;
+        float radialDiff = (param.m_Radius * param.m_Radius) - pointToVertex.sqrMagnitude;
+        
+        radialDiff = Mathf.Max(radialDiff, 0.0f);
 
-        radialRatio = Mathf.Max(radialRatio, 0.0f);
-
+        float radialRatio = radialDiff / param.m_Radius;
         float displacement = param.m_Strength * radialRatio;
 
         Vector3 vertexVelocity = param.m_SelectedNormal * displacement;

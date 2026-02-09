@@ -6,12 +6,35 @@ public class DeformerModel : MonoBehaviour
 {
     [SerializeField] private InputReader m_InputReader;
 
-    [SerializeField, Range(1.0f, 10.0f)] public float m_Radius = 2.0f;
-    [SerializeField, Range(0.1f, 1.0f)] public float m_Strength = 1f;
+    [SerializeField, Range(1.0f, 5.0f)] public float m_Radius;
+    [SerializeField, Range(0.1f, 1.0f)] public float m_Strength;
     [SerializeField] public DeformerMode m_Mode = DeformerMode.Raise;
 
     private DeformPanelViewModel m_ViewModel;
 
+    public static DeformerModel Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    private void OnEnable()
+    {
+        m_InputReader.DeformEvent += OnDeform;
+    }
+
+    private void OnDisable()
+    {
+        m_InputReader.DeformEvent -= OnDeform;
+    }
     public void ConnectViewModel(DeformPanelViewModel viewModel)
     {
         if (m_ViewModel != null)
@@ -21,6 +44,15 @@ public class DeformerModel : MonoBehaviour
 
         m_ViewModel = viewModel;
         m_ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+    public void DisconnectViewModel()
+    {
+        if (m_ViewModel != null)
+        {
+            m_ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+        }
+
+        m_ViewModel = null;
     }
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -37,17 +69,6 @@ public class DeformerModel : MonoBehaviour
         {
             m_Mode = m_ViewModel.DeformMode ? DeformerMode.Raise : DeformerMode.Lower;
         }
-    }
-
-    private void OnEnable()
-    {
-        m_InputReader.DeformEvent += OnDeform;
-    }
-
-    private void OnDisable()
-    {
-        m_InputReader.DeformEvent -= OnDeform;
-        m_ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
     }
 
     private void OnDeform(Vector2 mousePosition)

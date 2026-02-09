@@ -31,6 +31,7 @@ public class Deformer : MonoBehaviour
         m_OriginalVertices.Dispose();
         m_CurrentVertices.Dispose();
     }
+
     public bool TryScheduleJob(ref DeformerParams param)
     {
         if (true == m_Scheduled)
@@ -60,6 +61,7 @@ public class Deformer : MonoBehaviour
 
         m_Scheduled = false;
     }
+
     public void ResetMesh()
     {
         for (int i = 0; i < m_OriginalVertices.Length; ++i)

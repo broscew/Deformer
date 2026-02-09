@@ -24,23 +24,20 @@ public class FrameRateCounterViewModel : ViewModel
 
     public FrameRateCounterViewModel()
     {
-        GameObject frameCounterObject = GameObject.Find("FrameCounter");
-
-        if (frameCounterObject == null)
-        {
-            Debug.LogError("Unable to find FrameCounter game object!");
-            return;
-        }
-
-        m_Model = frameCounterObject.GetComponent<FrameRateCounterModel>();
+        m_Model = FrameRateCounterModel.Instance;
 
         if (m_Model == null)
         {
-            Debug.LogError("Deformer object has no DeformerModel component!");
+            Debug.LogError("Unable to get Framer Rate Counter Model!");
         }
 
         m_Model.OnFrameRateChanged += OnFrameRateChanged;
     }
+    ~FrameRateCounterViewModel()
+    {
+        m_Model.OnFrameRateChanged -= OnFrameRateChanged;
+    }
+
     public override void Init()
     {
         OnFrameRateChanged();

@@ -88,23 +88,22 @@ public class DeformPanelViewModel : ViewModel
 
     public DeformPanelViewModel()
     {
-        GameObject deformerGameObject = GameObject.Find("Deformer");
-
-        if (deformerGameObject == null)
-        {
-            Debug.LogError("Unable to find Deformer game object!");
-            return;
-        }
-
-        m_DeformerModel = deformerGameObject.GetComponent<DeformerModel>();
+        m_DeformerModel = DeformerModel.Instance;
 
         if (m_DeformerModel == null)
         {
-            Debug.LogError("Deformer object has no DeformerModel component!");
+            Debug.LogError("Unable to get Deformer Model!");
+            return;
         }
 
         m_DeformerModel.ConnectViewModel(this);
     }
+
+    ~DeformPanelViewModel()
+    {
+        m_DeformerModel.DisconnectViewModel();
+    }
+
     public override void Init()
     {
         if (m_DeformerModel == null)
@@ -129,8 +128,8 @@ public class DeformPanelViewModel : ViewModel
 
     private void UpdateDeformPanelInfoLabel()
     {
-        DeformPanelInfoLabel = DeformModeLabel + "| Strength: " + 
+        DeformPanelInfoLabel = DeformModeLabel + " | Strength: " + 
             m_Strength.ToString("F2", CultureInfo.InvariantCulture) + 
-            "| Radius: " + m_Radius.ToString("F2", CultureInfo.InvariantCulture);
+            " | Radius: " + m_Radius.ToString("F2", CultureInfo.InvariantCulture);
     }
 }

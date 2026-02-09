@@ -16,13 +16,10 @@ public class DeformPanelView : MonoBehaviour
 
     private DeformPanelViewModel m_ViewModel;
 
-    private void Awake()
+    private void Start()
     {
         m_ViewModel = new DeformPanelViewModel();
-    }
 
-    private void OnEnable()
-    {
         m_ViewModel.PropertyChanged += OnViewModelPropertyChanged;
         m_ViewModel.Init();
 
@@ -32,7 +29,7 @@ public class DeformPanelView : MonoBehaviour
         m_ResetButton.onClick.AddListener(OnResetClick);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         m_ResetButton.onClick.RemoveListener(OnResetClick);
         m_RadiusSlider.onValueChanged.RemoveListener(OnRadiusSliderChanged);

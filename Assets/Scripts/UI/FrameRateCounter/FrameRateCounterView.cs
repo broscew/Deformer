@@ -10,17 +10,14 @@ public class FrameRateCounterView : MonoBehaviour
     private FrameRateCounterViewModel m_ViewModel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
         m_ViewModel = new FrameRateCounterViewModel();
-    }
-    private void OnEnable()
-    {
         m_ViewModel.PropertyChanged += OnViewModelPropertyChanged;
         m_ViewModel.Init();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         m_ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
     }
